@@ -1,0 +1,68 @@
+<ng-template #singleMovieTemplate let-movie='data' let-isFetching='isFetching' >
+    <mat-card *ngIf="!isFetching">
+        <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
+        <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
+          <mat-card-title>{{movie.title}}</mat-card-title>
+        </mat-card-header>
+      
+        <mat-card-content>
+          <p [innerHtml]="movie.overview"></p>
+        </mat-card-content>                              
+        
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
+          <mat-spinner  *ngIf="isFetching"color="primary"></mat-spinner>
+    </div>
+</ng-template>
+
+
+<ng-container *ngIf="movie_id; else MoviesTemplate">
+
+    <app-movie [movie_id]="movie_id" #getMovie>
+        <ng-template [ngTemplateOutlet]="singleMovieTemplate" [ngTemplateOutletContext]="getMovie"></ng-template> 
+  
+    </app-movie>
+
+</ng-container>
+
+<!-- shows  -->
+<ng-template #MoviesTemplate>
+    <app-movies [genre]="genre" fake="true" #movies>
+            <mat-toolbar color="ascent">
+                    <span>Fresh Tomato</span>
+                    <app-genres #genres>
+                        <a *ngFor="let genre of genres.data" [routerLink]="[ '/movies', 'genre', genre.id ]"  routerLinkActive="active" mat-button>
+                            {{genre.name}}
+                        </a>
+                    </app-genres>
+            </mat-toolbar>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px" fxFlexAlign="end">
+
+                    <div *ngFor="let movie of movies.data" fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;" >
+                      <mat-card color="primary" [routerLink]="[ '/movies', movie.id ]" >
+                          <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
+                          <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
+                            <mat-card-title>{{movie.title}}</mat-card-title>
+                          </mat-card-header>
+                          <!-- 
+                          <mat-card-content>
+                            <p [ngStyle]="{ 'max-height': 'calc(1.4rem * 3)', 'overflow': 'hidden'}" [innerHtml]="movie.overview"></p>
+                          </mat-card-content>                              
+                          -->
+                      </mat-card> 
+                    </div>
+                  
+                  </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
+            <button mat-raised-button *ngIf="!movies.isFetching" color="primary" (click)="movies.fetchMovies()">More</button>
+            <mat-spinner  *ngIf="movies.isFetching"color="primary"></mat-spinner>
+        </div>
+        
+    </app-movies>
+</ng-template>
+
+
+

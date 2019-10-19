@@ -1,25 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomePageComponent } from './home-page/home-page.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { HomePageComponent } from './home-page/home-page.component';
+import { MoviesPageComponent } from './movies-page/movies-page.component';
+import routes from './app.routes';
+import { MoviesComponent } from './movies-page/movies.component';
+import { GenresComponent } from './movies-page/genres.component';
+import { MovieComponent } from './movies-page/movie.component';
 
-import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
+    MoviesPageComponent,
+    MoviesComponent,
+    GenresComponent,
+    MovieComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    MatMenuModule
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
