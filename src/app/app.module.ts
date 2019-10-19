@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MoviesPageComponent } from './movies-page/movies-page.component';
-import routes from './app.routes';
+import { routes } from './app.routes';
 import { MoviesComponent } from './movies-page/movies.component';
 import { GenresComponent } from './movies-page/genres.component';
 import { MovieComponent } from './movies-page/movie.component';

@@ -10,6 +10,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const material: any[] = [
+  FlexLayoutModule,
   MatGridListModule,
   MatToolbarModule,
   MatMenuModule,
@@ -17,19 +18,17 @@ const material: any[] = [
   MatButtonModule,
   MatCardModule,
   MatProgressSpinnerModule
-]
+];
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    FlexLayoutModule,
     ...material
   ],
   exports: [
-    ...material,
-    FlexLayoutModule
+    ...material
   ]
 })
 export class SharedModule { }
