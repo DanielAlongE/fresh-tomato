@@ -10,6 +10,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const material: any[] = [
   FlexLayoutModule,
@@ -21,7 +22,8 @@ const material: any[] = [
   MatCardModule,
   MatProgressSpinnerModule,
   MatTableModule,
-  MatTabsModule
+  MatTabsModule,
+  MatProgressBarModule
 ];
 
 
