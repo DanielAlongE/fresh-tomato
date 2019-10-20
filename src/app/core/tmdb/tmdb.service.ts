@@ -32,6 +32,7 @@ export class TmdbService {
   img185 = "https://image.tmdb.org/t/p/w185_and_h278_bestv2";
   img300 = "https://image.tmdb.org/t/p/w300_and_h450_bestv2";
   img600 = "https://image.tmdb.org/t/p/w600_and_h900_bestv2";
+  imgFull = "https://image.tmdb.org/t/p/original"
 
 
 
@@ -140,7 +141,23 @@ export class TmdbService {
     let { api_key } = this;
     let url = this.url + `/${creditType}/` + movie_id + "/credits" + this.makeArgs({api_key});
 
-    return this.http.get(url);
+    return this.http.get(url)
+                    .pipe(
+                      map( credit => this.prepareCredit(credit))
+                    );
+  }
+
+  prepareCredit(credit){
+    let cast;
+
+    if(credit.cast){
+      cast = credit.cast.map(c => {
+        let profile_path = c.profile_path ? (this.img185 + c.profile_path) : "https://picsum.photos/200";
+        return {...c, profile_path}
+      })
+    }
+
+    return {...credit, cast}
   }
 
   prepareMovie(movie: any){

@@ -1,20 +1,93 @@
-<ng-template #singleMovieTemplate let-movie='data' let-isFetching='isFetching' >
-    <mat-card *ngIf="!isFetching">
-        <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
-        <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
-          <mat-card-title>{{movie.title}}</mat-card-title>
-        </mat-card-header>
-      
-        <mat-card-content>
-          <p [innerHtml]="movie.overview"></p>
-        </mat-card-content>                              
-        
-    </mat-card>
+<ng-template #castTemplate let-cast="cast">
+  <div fxLayout="row wrap" fxLayoutGap="10px" >
 
-    <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
-          <mat-spinner  *ngIf="isFetching"color="primary"></mat-spinner>
-    </div>
+      <mat-card *ngFor="let person of cast; let i=index" class="person-card" >
+          <img mat-card-image [src]="person.profile_path" [alt]="person.name">
+          <mat-card-header>
+            <mat-card-title class="person-trauncate">{{person.name}}</mat-card-title>
+            <mat-card-subtitle class="person-trauncate">{{person.character}}</mat-card-subtitle>
+          </mat-card-header>
+      </mat-card>
+
+  </div>
 </ng-template>
+
+<ng-template #singleMovieTemplate let-movie='data' let-cast="cast" let-topCast="topCast" let-displayedColumns='displayedColumns' let-tableData='tableData' let-isFetching='isFetching' >
+
+  <div fxLayout="row wrap" fxFlexAlign="end" >
+    
+    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-card *ngIf="!isFetching">
+          <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
+          <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
+            <mat-card-title>{{movie.title}}</mat-card-title>
+          </mat-card-header>
+        
+          <mat-card-content>
+            <p [innerHtml]="movie.overview"></p>
+          </mat-card-content>                              
+          
+      </mat-card>
+    </div>
+
+
+    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+      <table mat-table [dataSource]="tableData" style="width: 100%;">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+    
+
+        <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+          <th mat-header-cell *matHeaderCellDef> &nbsp; &nbsp; </th>
+          
+
+          <td mat-cell style="min-width:150px" *matCellDef="let element"> 
+
+              <ng-container [ngSwitch]="element[column]">
+                  <ng-container *ngSwitchCase="'Released'">
+                      *** {{element[column]}} ***
+                  </ng-container>
+    
+                  <ng-container *ngSwitchDefault>
+                      {{element[column]}} 
+                  </ng-container>
+                    
+              </ng-container>
+          
+          </td>
+          
+          
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+      </table>
+    </div>
+      
+  </div>
+
+  <div>
+    <mat-tab-group>
+      <mat-tab label="Top Cast">
+          <ng-template [ngTemplateOutlet]="castTemplate" [ngTemplateOutletContext]="{cast: topCast}"></ng-template> 
+
+      </mat-tab>
+      <mat-tab label="Full Cast">
+          <ng-template [ngTemplateOutlet]="castTemplate" [ngTemplateOutletContext]="{cast: cast}"></ng-template> 
+
+      </mat-tab>
+      <mat-tab label="Crew"> Content 3 </mat-tab>
+      <mat-tab label="Video"> Content 1 </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
+        <mat-spinner diameter="50" *ngIf="isFetching"></mat-spinner>
+  </div>
+</ng-template>
+
 
 
 <ng-container *ngIf="movie_id; else MoviesTemplate">
@@ -58,7 +131,7 @@
 
         <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
             <button mat-raised-button *ngIf="!movies.isFetching" color="primary" (click)="movies.fetchMovies()">More</button>
-            <mat-spinner  *ngIf="movies.isFetching"color="primary"></mat-spinner>
+            <mat-spinner  diameter="50" *ngIf="movies.isFetching"></mat-spinner>
         </div>
         
     </app-movies>

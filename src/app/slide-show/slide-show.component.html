@@ -1,0 +1,9 @@
+
+<div *ngFor="let item of count; let i=index" style="height:200px; width:200px; margin:10px; background-color: lightgreen;" [@kill]  >slide-show {{i}}</div>
+
+<button mat-button (click)="toggle()" >Toggle</button>
+
+<button mat-button (click)="kill()" >Kill</button>
+
+<button mat-button (click)="increase()" >Add</button>
+<button mat-button (click)="decrease()" >Remove</button>

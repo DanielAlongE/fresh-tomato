@@ -1,3 +1,21 @@
 a.active {
     color: red;
 }
+
+.person-card {
+    width: 185px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.person-card img {
+    object-fit: cover; 
+    height: 278px;
+}
+
+.person-trauncate {
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
