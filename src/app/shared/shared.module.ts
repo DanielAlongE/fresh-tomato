@@ -11,6 +11,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ContainerComponent } from './container/container.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatIconModule} from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
 
 const material: any[] = [
   FlexLayoutModule,
@@ -23,18 +27,22 @@ const material: any[] = [
   MatProgressSpinnerModule,
   MatTableModule,
   MatTabsModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatButtonToggleModule,
+  MatIconModule,
+  MatChipsModule
 ];
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ContainerComponent],
   imports: [
     CommonModule,
     ...material
   ],
   exports: [
-    ...material
+    ...material,
+    ContainerComponent
   ]
 })
 export class SharedModule { }

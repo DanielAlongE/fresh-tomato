@@ -8,11 +8,14 @@ import { TmdbService } from '../core/tmdb/tmdb.service';
 })
 export class MoviesComponent implements OnInit {
   @Input() sort_by;
-  @Input() discoverType: "movie"|"tv" = "movie";
+  @Input() movieType: "movie"|"tv" = "movie";
   @Input() genre;
   data: any[] = [];
   isFetching = false;
   page = 1;
+  get link() {
+    return this.movieType === "tv" ? "series" : "movies";
+  } 
 
   constructor(private tmdb: TmdbService) { }
 
@@ -55,12 +58,14 @@ export class MoviesComponent implements OnInit {
     this.isFetching = true;
     let args = this.getArgs();
 
-    this.tmdb.getMovies( args, this.discoverType ).subscribe(movies => {
+    this.tmdb.getMovies( args, this.movieType ).subscribe(movies => {
 
       if(movies.results){
         this.data.push(...movies.results);
         this.isFetching = false;
         this.page += 1;
+
+        console.log(movies.results)
       }
       
     });

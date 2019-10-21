@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 type sort_by =  "popularity" |
                 "release_date" |
@@ -25,6 +26,7 @@ export class TmdbService {
    https://image.tmdb.org/t/p/w300_and_h450_bestv2/3iYQTLGoy7QnjcUYRJy4YrAgGvp.jpg 1x, 
    https://image.tmdb.org/t/p/w600_and_h900_bestv2/3iYQTLGoy7QnjcUYRJy4YrAgGvp.jpg 2x
    https://api.themoviedb.org/3/search/movie?api_key=f56190b212c02ed7d16f6b961b8526bb&language=en-US&query=el&page=1&include_adult=false&year=2019
+   https://api.themoviedb.org/3/tv/234/videos?api_key=f56190b212c02ed7d16f6b961b8526bb&language=en-US
    */
   url = "https://api.themoviedb.org/3";
   api_key = "f56190b212c02ed7d16f6b961b8526bb";
@@ -36,7 +38,7 @@ export class TmdbService {
 
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _sanitizer: DomSanitizer) { }
 
   makeArgs(args: object, start = "?"): string {
     var params: string = "";
@@ -160,7 +162,7 @@ export class TmdbService {
     return {...credit, cast}
   }
 
-  prepareMovie(movie: any){
+  prepareMovie(movie: any, movieType="movie"){
 
     let id = movie.id || 0;
     let title = movie.title || "";
@@ -174,20 +176,54 @@ export class TmdbService {
     let popularity = movie.popularity || "";  
     let overview = movie.overview || "";  
     let imdb_id = movie.imdb_id || "";  
-    let genres = movie.genres || "";  
+    let genres = movie.genres || [];  
+    let backdrop = {};
+    
+        backdrop['small'] = movie.backdrop_path ? (this.img300 + movie.backdrop_path) : "https://picsum.photos/300";
+        backdrop['medium'] = movie.backdrop_path ? (this.img600 + movie.backdrop_path) : "https://picsum.photos/600";
+        backdrop['full'] = movie.backdrop_path ? (this.imgFull + movie.backdrop_path) : "https://picsum.photos/1024";
 
-    return {id, title, tagline, status, 
+        genres = genres.map(g=>{
+        return (typeof g === "object") ? ({...g, movieType:`${movieType === 'tv' ? 'series': 'movies'}`}) : g;
+        })
+        //console.log(backdrop)
+
+    return {...movie,
+            id, title, tagline, status, 
             release_date, budget, revenue, 
             backdrop_path, poster_path, popularity, 
-            overview, imdb_id, genres};
+            overview, imdb_id, genres,
+            backdrop};
   }
 
 
-  prepareMovieFull(movie: any){
+  prepareMovieFull(movie: any, movieType="movie"){
 
-    let preparedMovie = this.prepareMovie(movie);
+    let preparedMovie = this.prepareMovie(movie, movieType);
 
     return {...movie, ...preparedMovie}
+  }
+
+  getMovieVideo(movie_id: number, movieType: "movie"|"tv" = "movie"): Observable<any> {
+    
+    let { api_key, language } = this;
+    let url = this.url + `/${movieType}/` + movie_id + "/videos" + this.makeArgs({api_key, language});
+
+    return this.http.get(url).pipe(
+      map(videos => this.prepareVideos(videos))
+    )
+  }
+
+  prepareVideos(videos) {
+    let results = videos.results || [];
+
+    results = results.map(video => {
+      let url = this._sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + video.key);
+
+      return {...video, url}
+    })
+
+    return {...videos, results}
   }
 
 

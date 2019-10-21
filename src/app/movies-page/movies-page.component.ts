@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -7,18 +7,31 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./movies-page.component.css']
 })
 export class MoviesPageComponent implements OnInit {
-  movie_id;
-  genre;
+  @Input() movie_id;
+  @Input() movieType: "movie"|"tv" = "movie";
+  @Input() genre;
   constructor( private route: ActivatedRoute ) { }
 
   ngOnInit() {
 
-    this.route.params.forEach((params: Params) => {
-      
-        this.movie_id = params['id'];
-        this.genre = params['genre'];
-      
-    })
+    //if call is from movies route
+
+    if(this.movieType === "movie"){
+
+      this.route.params.forEach((params: Params) => {
+        
+          if(params['id']){
+            this.movie_id = params['id'];
+          }
+          
+          if(params['genre']){
+            this.genre = params['genre'];          
+          }
+
+      });
+
+    }
+
 
   }
 

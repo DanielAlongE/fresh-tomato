@@ -12,6 +12,10 @@ export class MovieComponent implements OnInit {
   data: any = {};
   isFetching = false;
   cast = [];
+  videos = [];
+  get link() {
+    return this.movieType === "tv" ? "series" : "movies";
+  } 
   get topCast() {
     return this.cast.slice(0,10);
   }
@@ -26,7 +30,8 @@ export class MovieComponent implements OnInit {
   }
 
   makeTableData(movie: any): void {
-  let keys = ["homepage",
+  let keys = ["genres",
+              "homepage",
               "status",
               "imdb_id",
               "popularity",
@@ -34,17 +39,33 @@ export class MovieComponent implements OnInit {
               "revenue",
               "runtime"]
 
+    //add more keys if movieType is tv
+    if(this.movieType === 'tv'){
+      let moreKeys = ["created_by",
+                      "networks",
+                      "episode_run_time",
+                      "number_of_episodes",
+                      "number_of_seasons",
+                      "first_air_date",
+                      "last_air_date"];
+
+      keys.push(...moreKeys);
+    }
+
   let data = [];
 
   keys.forEach(key=> {
 
     let name, value;
 
-    name = key.toUpperCase();
+    name = key.toUpperCase().replace(/[_]+/g,' ');
     
-    value = movie[key] || "";
+    if(movie[key]){
+      value = movie[key];
 
-    data.push({name, value});
+      data.push({name, value});      
+    }
+
   })
 
   //console.log(this.tableData)
@@ -60,9 +81,10 @@ export class MovieComponent implements OnInit {
       this.isFetching = false;
       this.makeTableData(movie);
 
-      //console.log(this.tableData);
+      console.log(this.data, this.movieType);
       //fetch cast
       this.fetchCast();
+      this.fetchVideo();
     });
 
   }
@@ -71,7 +93,16 @@ export class MovieComponent implements OnInit {
     this.tmdb.getMovieCredit(this.movie_id, this.movieType).subscribe(credit => {
       if(credit.cast){
         this.cast = [...credit.cast];
-        console.log("cast", this.cast)
+        //console.log("cast", this.cast)
+      }
+    })
+  }
+
+  fetchVideo(){
+    this.tmdb.getMovieVideo(this.movie_id, this.movieType).subscribe(videos => {
+      if(videos.results){
+        this.videos = [...videos.results];
+        console.log("videos", this.videos)
       }
     })
   }

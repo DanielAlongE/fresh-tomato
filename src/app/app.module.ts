@@ -13,6 +13,7 @@ import { MoviesComponent } from './movies-page/movies.component';
 import { GenresComponent } from './movies-page/genres.component';
 import { MovieComponent } from './movies-page/movie.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
+import { SeriesPageComponent } from './series-page/series-page.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SlideShowComponent } from './slide-show/slide-show.component';
     GenresComponent,
     MovieComponent,
     SlideShowComponent,
+    SeriesPageComponent,
   ],
   imports: [
     BrowserModule,
