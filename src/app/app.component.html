@@ -1,0 +1,35 @@
+<mat-toolbar color="#ccc">
+        
+          <div fxShow.lg="true" fxShow.md="true" fxShow.sm="true" fxShow.xs="false">
+            <span [routerLink]="[ '/' ]">Fresh Tomato</span>
+            <a [routerLink]="[ '/', 'movies' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>movie</mat-icon> Movies
+            </a>
+            <a [routerLink]="[ '/', 'series' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>tv</mat-icon> Series
+            </a>
+            <a [routerLink]="[ '/', 'favorites' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>favorite</mat-icon> Favorites
+            </a>
+            <a [routerLink]="[ '/', 'search' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>search</mat-icon>
+            </a>
+          </div>
+
+          <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-around" fxShow.lg="false" fxShow.md="false"  fxShow.sm="false" fxShow.xs="true">
+            <span [routerLink]="[ '/' ]">FT</span>
+              <a [routerLink]="[ '/', 'movies' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>movie</mat-icon>
+            </a>
+            <a [routerLink]="[ '/', 'series' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>tv</mat-icon>
+            </a>
+            <a [routerLink]="[ '/', 'favorites' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>favorite</mat-icon>
+            </a>
+            <a [routerLink]="[ '/', 'search' ]"  routerLinkActive="active" mat-button>
+              <mat-icon>search</mat-icon>
+            </a>
+        </div>
+</mat-toolbar>
+  <router-outlet></router-outlet>

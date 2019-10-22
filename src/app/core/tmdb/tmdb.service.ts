@@ -14,6 +14,8 @@ type sort_by =  "popularity" |
 
 type sort_direction = "asc" | "desc";
 
+declare let window: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -77,7 +79,7 @@ export class TmdbService {
 
     let query = args.query || "";
 
-    let page = args.query || 1;
+    let page = args.page || 1;
 
     let url = this.url + "/search/" + searchType + this.makeArgs({api_key, language, query, page});
 
@@ -224,6 +226,59 @@ export class TmdbService {
     })
 
     return {...videos, results}
+  }
+
+  getFavorite(type: "series"| "movies"){
+    let favorite = window.localStorage.getItem(type) || "[]";
+    
+    favorite = JSON.parse(favorite)
+
+    //console.log({favorite})
+
+    //window.localStorage.clear();
+
+    return favorite;
+  }
+
+  addFavorite(value, type: "series"| "movies"){
+    let favorite = this.getFavorite(type);
+
+      favorite.push(+value);
+    
+    favorite = Array.from(new Set(favorite))
+
+    let jsonString = JSON.stringify(favorite);
+
+    window.localStorage.setItem(type, jsonString);
+
+    return favorite;
+  }
+
+  removeFavorite(value, type: "series"| "movies"){
+    let favorite: number[] = this.getFavorite(type);
+    let movie_id = +value;
+
+    favorite = favorite.filter(v => v!==movie_id);
+    
+    let jsonString = JSON.stringify(favorite);
+
+    window.localStorage.setItem(type, jsonString);
+
+    return favorite;
+  }
+
+  toggleFavorite(value, type: "series"| "movies"){
+    let favorite = this.getFavorite(type);
+    let movie_id = +value;
+
+    //movie_id exists
+    if(favorite.includes(movie_id)){
+      return this.removeFavorite(movie_id, type);
+    }//add new movie_id
+    else{
+      return this.addFavorite(movie_id, type);
+    }
+    
   }
 
 

@@ -1,0 +1,52 @@
+<app-container>
+    <h2>Search</h2>
+    <form #searchForm="ngForm" (ngSubmit)="handleSearch(searchForm.value)">
+
+    
+    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center" fxFlexAlign="end">
+            <mat-form-field class="search-input">
+                <input matInput placeholder="Type something" name="query" [(ngModel)]="query">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Search Type</mat-label>
+                <mat-select name="searchType" [(ngModel)]="searchType">
+                    <mat-option value="movie">
+                        Movie
+                    </mat-option>
+                    <mat-option value="tv">
+                        Series
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button [disabled]="isSearching" type="submit" mat-button>
+                <mat-icon>search</mat-icon>
+            </button>
+           
+    </div>
+</form>
+
+
+</app-container>
+
+    
+<app-container>    
+    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center" fxFlexAlign="end">
+
+            <div *ngFor="let movie of data" fxLayout="column" fxFlex="300px" fxFlex.md="250px" fxFlex.lg="200px" style="padding: 5px;" >
+            <mat-card color="primary" [routerLink]="[ '/', link, movie.id ]" >
+                <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
+                <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
+                    <mat-card-title class="max-line-2">{{movie.title || movie.name}}</mat-card-title>
+                </mat-card-header>
+
+            </mat-card> 
+            </div>
+        
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
+        <button mat-raised-button *ngIf="!isSearching && data.length > 0" color="primary" (click)="handleSearch(false)">More</button>
+        <mat-spinner  diameter="50" *ngIf="isSearching"></mat-spinner>
+    </div>
+</app-container>    

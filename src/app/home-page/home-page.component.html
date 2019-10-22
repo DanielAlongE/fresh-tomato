@@ -1,14 +1,3 @@
-<mat-toolbar color="ascent">
-        <span>Fresh Tomato</span>
-        <app-genres #genres>
-                <a [routerLink]="[ '/', 'movies' ]"  routerLinkActive="active" mat-button>
-                    Movies
-                </a>
-            <a [routerLink]="[ '/', 'series' ]"  routerLinkActive="active" mat-button>
-                Series
-            </a>
-        </app-genres>
-</mat-toolbar>
 
 <app-movies movieType="movie" #movies>
 

@@ -4,7 +4,11 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 a.active {
-    color: red;
+    color: tomato;
+}
+
+mat-toolbar > span {
+    color: tomato;
 }
 
 .person-card {
@@ -81,4 +85,19 @@ a.active {
     width: 100%;
     overflow: auto;
     overflow-y: hidden;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.favorite-card {
+    display: inline-block;
+    width: 200px;
+    height: 400px;
+    margin: 5px;
+}
+
+.search-input {
+    width: 50%;
 }

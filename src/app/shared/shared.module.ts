@@ -15,6 +15,10 @@ import { ContainerComponent } from './container/container.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const material: any[] = [
   FlexLayoutModule,
@@ -30,7 +34,11 @@ const material: any[] = [
   MatProgressBarModule,
   MatButtonToggleModule,
   MatIconModule,
-  MatChipsModule
+  MatChipsModule,
+  MatExpansionModule,
+  MatInputModule,
+  MatSelectModule,
+  MatBadgeModule
 ];
 
 

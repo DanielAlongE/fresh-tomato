@@ -24,7 +24,7 @@
       </div>
     </ng-template>
     
-    <ng-template #singleMovieTemplate let-movie='data' let-link="link" let-cast="cast" let-topCast="topCast" let-videos='videos' let-displayedColumns='displayedColumns' let-tableData='tableData' let-isFetching='isFetching' >
+    <ng-template #singleMovieTemplate let-movie_id="movie_id" let-movie='data' let-link="link" let-cast="cast" let-topCast="topCast" let-videos='videos' let-displayedColumns='displayedColumns' let-tableData='tableData' let-isFetching='isFetching' >
     
       <div class="movie-profile-backdrop">
         <img *ngIf="movie.backdrop" [src]="movie.backdrop.small"
@@ -38,9 +38,7 @@
           <div class="floating-icons">
               <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end center">
                   
-                  <button mat-mini-fab aria-label="icon-button favorite">
-                      <mat-icon>favorite</mat-icon>
-                  </button>
+                  <app-favorite-button [movie_id]="movie_id" [type]="link"></app-favorite-button>
               </div>
           </div>                     
       </div>
@@ -175,19 +173,11 @@
     <!-- shows  -->
     <ng-template #MoviesTemplate>
         <app-movies [genre]="genre" [movieType]="movieType" #movies>
-                <mat-toolbar color="ascent">
-                        <span>Fresh Tomato</span>
-                        <app-genres #genres>
-                            <a *ngFor="let genre of genres.data" [routerLink]="[ '/', movies.link, 'genre', genre.id ]"  routerLinkActive="active" mat-button>
-                                {{genre.name}}
-                            </a>
-                        </app-genres>
-                </mat-toolbar>
     
           <app-container>    
-            <div fxLayout="row wrap" fxLayoutGap="10px" fxFlexAlign="end">
+            <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center" fxFlexAlign="end">
     
-                    <div *ngFor="let movie of movies.data" fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;" >
+                    <div *ngFor="let movie of movies.data" fxLayout="column" fxFlex="300px" fxFlex.md="250px" fxFlex.lg="200px" style="padding: 5px;" >
                       <mat-card color="primary" [routerLink]="[ '/', movies.link, movie.id ]" >
                           <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
                           <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >

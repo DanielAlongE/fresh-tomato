@@ -9,6 +9,7 @@ import { TmdbService } from '../core/tmdb/tmdb.service';
 export class MovieComponent implements OnInit {
   @Input() movie_id;
   @Input() movieType: "movie"|"tv" = "movie";
+  @Input() simple = false;
   data: any = {};
   isFetching = false;
   cast = [];
@@ -80,12 +81,18 @@ export class MovieComponent implements OnInit {
     this.tmdb.getMovieById(this.movie_id, this.movieType).subscribe(movie => { 
       this.data = movie;
       this.isFetching = false;
-      this.makeTableData(movie);
 
-      console.log(this.data, this.movieType);
-      //fetch cast
-      this.fetchCast();
-      this.fetchVideo();
+      //fetch more data if not simple
+      if(!this.simple){
+        this.makeTableData(movie);
+        //console.log(this.data, this.movieType);
+        //fetch cast
+        this.fetchCast();
+        this.fetchVideo();        
+      }
+
+
+
     });
 
   }
