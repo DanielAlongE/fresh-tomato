@@ -65,7 +65,7 @@ export class MoviesComponent implements OnInit {
         this.isFetching = false;
         this.page += 1;
 
-        console.log(movies.results)
+        //console.log(movies.results)
       }
       
     });

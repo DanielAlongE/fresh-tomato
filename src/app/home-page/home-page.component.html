@@ -1,3 +1,69 @@
-<app-slide-show></app-slide-show>
+<mat-toolbar color="ascent">
+        <span>Fresh Tomato</span>
+        <app-genres #genres>
+                <a [routerLink]="[ '/', 'movies' ]"  routerLinkActive="active" mat-button>
+                    Movies
+                </a>
+            <a [routerLink]="[ '/', 'series' ]"  routerLinkActive="active" mat-button>
+                Series
+            </a>
+        </app-genres>
+</mat-toolbar>
+
+<app-movies movieType="movie" #movies>
+
+  <app-container>    
+    <div class="horizontal-scroll" >
+
+            <div *ngFor="let movie of movies.data" fxFlex="30" style="margin: 5px; width: 180px; float: left;" >
+              <mat-card color="primary" [routerLink]="[ '/', movies.link, movie.id ]" >
+                  <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
+                  <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
+                    <mat-card-title class="max-line-2">{{movie.title || movie.name}}</mat-card-title>
+                  </mat-card-header>
+              </mat-card> 
+            </div>
+          
+    </div>
+<!--
+    <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
+        <button mat-raised-button *ngIf="!movies.isFetching" color="primary" (click)="movies.fetchMovies()">
+            More movies
+        </button>
+        <mat-spinner  diameter="50" *ngIf="movies.isFetching"></mat-spinner>
+    </div>
+ -->
+  </app-container>    
+</app-movies>
 
 
+
+
+<app-movies movieType="tv" #series>
+
+        <app-container>    
+        <div class="horizontal-scroll">
+            <div fxLayout="row " fxLayoutGap="10px" fxFlexAlign="end">
+      
+                  <div *ngFor="let movie of series.data" fxFlex="30" style="padding: 5px;" >
+                    <mat-card color="primary" [routerLink]="[ '/', series.link, movie.id ]" >
+                        <img mat-card-image [src]="movie.poster_path" style="object-fit: cover; height: 400px;" [alt]="movie.title">
+                        <mat-card-header style="position: relative; top:0px; width: 100%; height: 50px;" >
+                          <mat-card-title class="max-line-2">{{movie.title || movie.name}}</mat-card-title>
+                        </mat-card-header>
+                    </mat-card> 
+                  </div>
+                
+            </div>
+        </div>
+          
+<!--      
+          <div fxLayout="row" fxLayoutAlign="center center" style="height:100px;" >
+              <button mat-raised-button *ngIf="!series.isFetching" color="primary" (click)="series.fetchMovies()">
+                  More Series
+                </button>
+              <mat-spinner  diameter="50" *ngIf="series.isFetching"></mat-spinner>
+          </div>
+--> 
+        </app-container>    
+</app-movies>

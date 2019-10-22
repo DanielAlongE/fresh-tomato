@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-series-page',
   template: `
-    <app-movies-page [movie_id]="movie_id" [movieType]="movieType" [genre]="genre"><app-movies-page>
+    <app-movies-template [movie_id]="movie_id"  [movieType]="movieType" [genre]="genre"></app-movies-template>
   `,
   styles: []
 })

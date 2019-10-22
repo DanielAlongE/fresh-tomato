@@ -16,8 +16,6 @@ export class MoviesPageComponent implements OnInit {
 
     //if call is from movies route
 
-    if(this.movieType === "movie"){
-
       this.route.params.forEach((params: Params) => {
         
           if(params['id']){
@@ -30,7 +28,7 @@ export class MoviesPageComponent implements OnInit {
 
       });
 
-    }
+    
 
 
   }
