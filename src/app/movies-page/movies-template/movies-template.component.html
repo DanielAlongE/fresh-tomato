@@ -56,7 +56,12 @@
     
         <div class="section">
           <mat-tab-group>
-            <mat-tab label="Info">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon color="primary">info</mat-icon>
+                    Info
+                </ng-template>
+
                 <table mat-table [dataSource]="tableData" style="width: 100%;">
     
                     <ng-container matColumnDef="name">
@@ -78,6 +83,11 @@
                               <ng-container *ngSwitchCase="'REVENUE'">
                                   {{element.value |  currency:'USD' }}
                               </ng-container>
+
+                              <ng-container *ngSwitchCase="'BUDGET'">
+                                    {{element.value |  currency:'USD' }}
+                                </ng-container>
+                              
           
                               <ng-container *ngSwitchCase="'POPULARITY'">
                                 <mat-progress-bar mode="determinate" [value]="element.value"></mat-progress-bar>
@@ -118,16 +128,27 @@
                 </table>
     
             </mat-tab>
-            <mat-tab label="Top Cast">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon color="primary">person</mat-icon>
+                    Top Cast
+                </ng-template>
                 <ng-template [ngTemplateOutlet]="castTemplate" [ngTemplateOutletContext]="{cast: topCast}"></ng-template> 
     
             </mat-tab>
-            <mat-tab label="Full Cast">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon color="primary">people</mat-icon>
+                    Cast Full
+                </ng-template>
                 <ng-template [ngTemplateOutlet]="castTemplate" [ngTemplateOutletContext]="{cast: cast}"></ng-template> 
     
             </mat-tab>
-            <mat-tab label="Video"> 
-              
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon color="primary">movie</mat-icon>
+                    Video
+                </ng-template>
               <ng-template [ngTemplateOutlet]="videosTemplate" [ngTemplateOutletContext]="{videos: videos}"></ng-template> 
     
             </mat-tab>

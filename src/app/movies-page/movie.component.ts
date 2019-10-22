@@ -21,7 +21,7 @@ export class MovieComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['name', 'value'];
-  tableData = [{name:'Sample', value:'One'}]
+  tableData = []
 
   constructor( private tmdb: TmdbService ) { }
 
@@ -36,6 +36,7 @@ export class MovieComponent implements OnInit {
               "imdb_id",
               "popularity",
               "release_date",
+              "budget",
               "revenue",
               "runtime"]
 
