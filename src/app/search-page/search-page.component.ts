@@ -41,7 +41,8 @@ export class SearchPageComponent implements OnInit {
   }
 
   handleSearch(clear = true){
-    let {searchType, query, page} = this;
+
+    
 
     if(this.isSearching){
       return;
@@ -50,6 +51,9 @@ export class SearchPageComponent implements OnInit {
     if(clear){
       this.clear();      
     }
+    
+    let {searchType, query, page} = this;
+
 
     if(query){
 
