@@ -53,7 +53,7 @@
         </div>
     
         <div class="section">
-          <mat-tab-group>
+          <mat-tab-group *ngIf="!isFetching">
             <mat-tab>
                 <ng-template mat-tab-label>
                     <mat-icon color="primary">info</mat-icon>
