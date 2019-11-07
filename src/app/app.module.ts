@@ -19,6 +19,8 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { FavoritePageComponent } from './favorite-page/favorite-page.component';
 import { FavoriteButtonComponent } from './movies-page/movies-template/favorite-button/favorite-button.component';
 import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import { FormsModule } from '@angular/forms';
     CoreModule,
     SharedModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
